@@ -13,7 +13,10 @@ from telegram.ext import CallbackContext, Dispatcher, Filters, MessageHandler
 from werkzeug import Response
 
 load_dotenv()
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+  level=logging.DEBUG,
+  format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 
 app = Flask(__name__)
 
