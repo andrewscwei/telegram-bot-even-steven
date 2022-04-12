@@ -25,6 +25,7 @@ help:
 	@echo $(COLOR_CYAN)"    clean"$(COLOR_RESET)" - Removes all built Docker images related to this app"
 	@echo $(COLOR_CYAN)"      dev"$(COLOR_RESET)" - Runs the app in developpment mode"
 	@echo $(COLOR_CYAN)"    build"$(COLOR_RESET)" - Builds the production Docker image"
+	@echo $(COLOR_CYAN)"     test"$(COLOR_RESET)" - Builds and runs tests on the Docker image"
 	@echo $(COLOR_CYAN)"      run"$(COLOR_RESET)" - Runs the production Docker image"
 	@echo
 	@echo "  where "$(COLOR_CYAN)"<image_name>"$(COLOR_YELLOW)"(optional)"$(COLOR_RESET)" is the target Docker image name (default: "$(COLOR_YELLOW)"$(name)"$(COLOR_RESET)")"
