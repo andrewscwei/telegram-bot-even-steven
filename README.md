@@ -1,4 +1,4 @@
-# Telegram Bot: Even Steven [![CI](https://github.com/andrewscwei/telegram-bot-even-steven/workflows/CI/badge.svg?branch=master)](https://github.com/andrewscwei/telegram-bot-even-steven/actions/workflows/ci.yml?query=branch%3Amaster) [![CD](https://github.com/andrewscwei/telegram-bot-even-steven/workflows/CD/badge.svg?branch=master)](https://github.com/andrewscwei/telegram-bot-even-steven/actions/workflows/cd.yml?query=branch%3Amaster)
+# Telegram Bot: Even Steven [![CI](https://github.com/andrewscwei/telegram-bot-even-steven/workflows/CI/badge.svg?branch=master)](https://github.com/andrewscwei/telegram-bot-even-steven/actions/workflows/ci.yml?query=branch%3Amaster)
 
 A simple Telegram bot for splitting expenses within a group.
 

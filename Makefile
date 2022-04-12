@@ -13,24 +13,23 @@ COLOR_LIGHT_GRAY = "$(COLOR_PREFIX)0;37m"
 
 build = $(shell git rev-parse --short HEAD)
 name = bot
-tag =
-port = 8080
+tag = latest
 
-all: build
+all: help
 
 help:
 	@echo
-	@echo "Usage: "$(COLOR_BLUE)"make "$(COLOR_CYAN)"<command> [name=<image_name>] [tag=<image_tag>] [build=<build_number]"$(COLOR_RESET)
+	@echo "Usage: "$(COLOR_BLUE)"make "$(COLOR_CYAN)"<command> [name=<image_name>] [tag=<image_tag>] [build=<build_number>]"$(COLOR_RESET)
 	@echo
 	@echo "  where "$(COLOR_CYAN)"<command>"$(COLOR_RESET)" is one of:"
-	@echo $(COLOR_CYAN)"    clean"$(COLOR_RESET)" - Removes all local Docker images related to this app"
-	@echo $(COLOR_CYAN)"      dev"$(COLOR_RESET)" - Runs the app locally"
-	@echo $(COLOR_CYAN)"    build"$(COLOR_RESET)" - Builds the Docker image"
-	@echo $(COLOR_CYAN)"      run"$(COLOR_RESET)" - Runs the Docker image"
+	@echo $(COLOR_CYAN)"    clean"$(COLOR_RESET)" - Removes all built Docker images related to this app"
+	@echo $(COLOR_CYAN)"      dev"$(COLOR_RESET)" - Runs the app in developpment mode"
+	@echo $(COLOR_CYAN)"    build"$(COLOR_RESET)" - Builds the production Docker image"
+	@echo $(COLOR_CYAN)"      run"$(COLOR_RESET)" - Runs the production Docker image"
 	@echo
-	@echo "  where "$(COLOR_CYAN)"<image_name>"$(COLOR_YELLOW)"(optional)"$(COLOR_RESET)" is the target Docker image name (defaults to "$(COLOR_YELLOW)"$(name)"$(COLOR_RESET)")"
-	@echo "  where "$(COLOR_CYAN)"<image_tag>"$(COLOR_YELLOW)"(optional)"$(COLOR_RESET)" is the target Docker image tag (defaults to target name)"
-	@echo "  where "$(COLOR_CYAN)"<build_number>"$(COLOR_YELLOW)"(optional)"$(COLOR_RESET)" is the build name (defaults to "$(COLOR_YELLOW)"current short SHA, i.e. $(build)"$(COLOR_RESET)")"
+	@echo "  where "$(COLOR_CYAN)"<image_name>"$(COLOR_YELLOW)"(optional)"$(COLOR_RESET)" is the target Docker image name (default: "$(COLOR_YELLOW)"$(name)"$(COLOR_RESET)")"
+	@echo "  where "$(COLOR_CYAN)"<image_tag>"$(COLOR_YELLOW)"(optional)"$(COLOR_RESET)" is the target Docker image tag (default: "$(COLOR_YELLOW)"$(tag)"$(COLOR_RESET)")"
+	@echo "  where "$(COLOR_CYAN)"<build_number>"$(COLOR_YELLOW)"(optional)"$(COLOR_RESET)" is the build name (default: "$(COLOR_YELLOW)"$(build)"$(COLOR_RESET)")"
 	@echo
 
 clean:
@@ -38,18 +37,27 @@ clean:
 	@docker system prune -f
 
 dev:
-	@FLASK_APP=main.py FLASK_ENV=development pipenv run dotenv run -- flask run --port $(port)
+	@FLASK_APP=main.py FLASK_ENV=development pipenv run dotenv run -- flask run --port 8080
 
-build: tag = latest
+test:
+ifdef tag
+	@docker build --target test -t $(name):$(tag) .
+	@IMAGE_NAME=$(name) IMAGE_TAG=$(tag) docker compose -f docker-compose.yml run main pytest
+else
+	@docker build --target test -t $(name):test .
+	@IMAGE_NAME=$(name) IMAGE_TAG=test docker compose -f docker-compose.yml run main pytest
+endif
+
 build:
 	@docker build \
 		--build-arg BUILD_NUMBER=$(build) \
+		--target release \
 		-t $(name):$(tag) \
 		.
 
 run:
 ifdef tag
-	@IMAGE_NAME=$(name) IMAGE_TAG=$(tag) docker-compose -f docker-compose.yml up
+	@IMAGE_NAME=$(name) IMAGE_TAG=$(tag) docker compose -f docker-compose.yml up
 else
-	@IMAGE_NAME=$(name) IMAGE_TAG=latest docker-compose -f docker-compose.yml up
+	@IMAGE_NAME=$(name) IMAGE_TAG=latest docker compose -f docker-compose.yml up
 endif
