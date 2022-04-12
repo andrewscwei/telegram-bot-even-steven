@@ -22,7 +22,9 @@ jobs:
           tags: image:test
           target: test
       - name: Run tests
-        run: make test name=image tag=test
+        run: |
+          echo "TELEGRAM_BOT_TOKEN=\"${{ secrets.TELEGRAM_BOT_TOKEN }}\"" >> .env
+          make test name=image tag=test
       - name: Build release target
         uses: docker/build-push-action@v2
         with:
