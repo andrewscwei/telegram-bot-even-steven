@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  main:
+    image: ${IMAGE_NAME:-bot}:${IMAGE_TAG:-latest}
+    container_name: bot
+    env_file: .env
+    ports:
+      - 8080:8080

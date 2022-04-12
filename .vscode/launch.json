@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "name": "Dev",
+      "type": "python",
+      "request": "launch",
+      "env": {
+        "FLASK_APP": "main.py",
+        "FLASK_ENV": "development"
+      },
+      "console": "integratedTerminal",
+      "module": "flask",
+      "args": [
+        "run",
+        "--port",
+        "8080"
+      ]
+    }
+  ]
+}
