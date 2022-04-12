@@ -1,7 +1,3 @@
-"""
-App entrypoint.
-"""
-
 import http
 import logging
 import os
@@ -13,6 +9,7 @@ from telegram.ext import CallbackContext, Dispatcher, Filters, MessageHandler
 from werkzeug import Response
 
 load_dotenv()
+
 logging.basicConfig(
   level=logging.DEBUG,
   format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
