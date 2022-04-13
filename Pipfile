@@ -7,12 +7,12 @@ name = "pypi"
 python-telegram-bot = "*"
 flask = "*"
 gunicorn = "*"
-python-dotenv = "*"
 requests = "*"
 
 [dev-packages]
 pylint = "*"
 pytest = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.10"
