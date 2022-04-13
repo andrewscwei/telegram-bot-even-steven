@@ -12,8 +12,8 @@ BASE_DIR=$(cd $(dirname $0); cd ../../; pwd -P)
 # `HEROKU_API_KEY`, which will be automatically picked up by the Heroku CLI.
 
 heroku container:login
-heroku container:push --arg BUILD_NUMBER=$(echo $GITHUB_SHA | head -c7) -a $APP_NAME web
-heroku container:release -a $APP_NAME web
+heroku container:push --arg BUILD_NUMBER=$(echo $GITHUB_SHA | head -c7) -a $HEROKU_APP_NAME web
+heroku container:release -a $HEROKU_APP_NAME web
 
 echo
 echo "Successfuly deployed to Heroku"
