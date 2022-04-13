@@ -5,5 +5,6 @@ services:
     container_name: bot
     environment:
       TELEGRAM_BOT_TOKEN: $TELEGRAM_BOT_TOKEN
+      PORT: 8080
     ports:
       - 8080:8080
