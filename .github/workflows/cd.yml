@@ -1,10 +1,13 @@
-name: CI
+name: CD
 on:
   push:
-    branches-ignore: ["**"]
-    # branches: ["**"]
-    # tags-ignore: ["v*"]
+    branches: ["**"]
+    # tags: ["v*"]
+  release:
+    types: [published]
 env:
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+  HEROKU_APP_NAME: telegram-bot-even-steven
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 jobs:
   build:
@@ -34,3 +37,13 @@ jobs:
           cache-to: type=gha,scope=${{ github.workflow }},mode=max
           context: .
           push: false
+  deploy:
+    name: Deploy
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Deploy to Heroku
+        run: .github/workflows/deploy_to_heroku.sh

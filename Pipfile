@@ -8,6 +8,7 @@ python-telegram-bot = "*"
 flask = "*"
 gunicorn = "*"
 python-dotenv = "*"
+requests = "*"
 
 [dev-packages]
 pylint = "*"

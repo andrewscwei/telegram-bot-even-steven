@@ -38,7 +38,7 @@ clean:
 	@docker system prune -f
 
 dev:
-	@FLASK_APP=main.py FLASK_ENV=development pipenv run dotenv run -- flask run --port 8080
+	@FLASK_APP=main FLASK_ENV=development pipenv run dotenv run -- flask run --port 8080
 
 test:
 ifdef tag

@@ -1,29 +1,19 @@
 import http
-import logging
 import os
 
 from dotenv import load_dotenv
 from flask import Flask, request
-from telegram import Bot, Update
-from telegram.ext import CallbackContext, Dispatcher, Filters, MessageHandler
+from telegram.ext import Updater
 from werkzeug import Response
+
+from app.commands import marco_polo
+from app.utils import log, send_message
 
 load_dotenv()
 
-logging.basicConfig(
-  level=logging.DEBUG,
-  format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-
 app = Flask(__name__)
-
-def echo(update: Update, context: CallbackContext) -> None:
-  update.message.reply_text(update.message.text)
-
-bot = Bot(token=os.getenv("TELEGRAM_BOT_TOKEN"))
-
-dispatcher = Dispatcher(bot=bot, update_queue=None)
-dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
+updater = Updater(token=os.environ.get("TELEGRAM_BOT_TOKEN"))
+dispatcher = updater.dispatcher
 
 @app.get("/health")
 def health_check() -> Response:
@@ -35,5 +25,17 @@ def version() -> Response:
 
 @app.post("/")
 def index() -> Response:
-  dispatcher.process_update(Update.de_json(request.get_json(force=True), bot))
+  data = request.get_json()
+
+  log.info(f"Receiving payload... OK: {data}")
+
+  chat_id = data["message"]["chat"]["id"]
+  text: str = data["message"]["text"]
+
+  if text.lower() == "marco":
+    marco_polo(chat_id)
+
   return "", http.HTTPStatus.NO_CONTENT
+
+if __name__ == "__main__":
+  app.run()
