@@ -1,8 +1,8 @@
-# Telegram Bot: Even Steven [![CI](https://github.com/andrewscwei/telegram-bot-even-steven/workflows/CI/badge.svg)](https://github.com/andrewscwei/telegram-bot-even-steven/actions?query=workflow%3ACI) [![CD](https://github.com/andrewscwei/telegram-bot-even-steven/workflows/CD/badge.svg)](https://github.com/andrewscwei/telegram-bot-even-steven/actions?query=workflow%3ACD)
+# Telegram Bot: Even Steven [![CI](https://github.com/andrewscwei/telegram-bot-even-steven/workflows/CI/badge.svg)](https://github.com/andrewscwei/telegram-bot-even-steven/actions/workflows/ci.yml) [![CD](https://github.com/andrewscwei/telegram-bot-even-steven/workflows/CD/badge.svg)](https://github.com/andrewscwei/telegram-bot-even-steven/actions/workflows/cd.yml)
 
 A simple Telegram bot for splitting expenses within a group.
 
-This bot uses [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot) and [Flask](https://flask.palletsprojects.com), hosted on [Heroku](https://dashboard.heroku.com/).
+This is a webhook-based Telegram bot powered by [Flask](https://flask.palletsprojects.com) and [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot), and deployed to [Heroku Container Registry](https://www.heroku.com/deploy-with-docker).
 
 ## Usage
 
