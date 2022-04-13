@@ -33,4 +33,4 @@ RUN pipenv install --system --deploy
 COPY main.py ./main.py
 COPY app ./app
 
-CMD exec gunicorn --bind :8080 --workers 1 --threads 8 --timeout 0 main:app
+CMD gunicorn --bind :8080 --workers 1 --threads 8 --timeout 0 main:app
