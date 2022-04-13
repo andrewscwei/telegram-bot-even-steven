@@ -2,6 +2,8 @@
 
 A simple Telegram bot for splitting expenses within a group.
 
+This bot uses [`python-telegram-bot`](https://github.com/python-telegram-bot/python-telegram-bot) and [Flask](https://flask.palletsprojects.com), hosted on [Heroku](https://dashboard.heroku.com/).
+
 ## Usage
 
 ### Prerequisites
@@ -60,7 +62,7 @@ $ make test
 
 ### Testing Local Bot on Telegram
 
-Firtt, run [`ngrok`](https://ngrok.com/download) to expose the bot to the public, make note of the public URL:
+First, run [`ngrok`](https://ngrok.com/download) to expose the bot to the public, make note of the public URL:
 
 ```sh
 $ ngrok http 8080
