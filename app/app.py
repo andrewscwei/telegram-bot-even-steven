@@ -1,6 +1,7 @@
 import http
 import os
 
+import telegram
 from flask import Flask, Response, request
 
 from .bot import bot
@@ -23,15 +24,15 @@ def index() -> Response:
     return "Bot is inactive", http.HTTPStatus.INTERNAL_SERVER_ERROR
 
   try:
-    data = request.get_json()
-    chat_id: str = data["message"]["chat"]["id"]
-    text: str = data["message"]["text"]
+    update = telegram.Update.de_json(request.get_json(force=True), bot)
+    chat_id = update.message.chat.id
+    text = update.message.text.encode('utf-8').decode()
 
-    log.info("Parsing message payload... %s: %s", "OK", data)
+    log.info("Parsing incoming message... %s: %s", "OK", update)
 
     if text.lower() == "marco":
       marco_polo(bot, chat_id)
   except Exception as exc:
-    log.exception("Parsing message payload... %s: %s", "ERR", exc)
+    log.exception("Parsing incoming message... %s: %s", "ERR", exc)
 
   return "", http.HTTPStatus.NO_CONTENT

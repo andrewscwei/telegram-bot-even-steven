@@ -1,5 +1,5 @@
 from telegram import Bot
-from app.utils import send_message
 
-def marco_polo(bot: Bot, chat_id: str):
-  send_message(bot, chat_id, "Polo")
+
+def marco_polo(bot: Bot, chat_id: str) -> None:
+  bot.send_message(chat_id, "Polo")
