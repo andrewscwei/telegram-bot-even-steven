@@ -3,6 +3,7 @@ services:
   main:
     image: ${IMAGE_NAME:-bot}:${IMAGE_TAG:-latest}
     container_name: bot
-    env_file: .env
+    environment:
+      TELEGRAM_BOT_TOKEN: $TELEGRAM_BOT_TOKEN
     ports:
       - 8080:8080
