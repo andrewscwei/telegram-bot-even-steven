@@ -1,19 +1,30 @@
-import os
-
 from telegram import Bot
+from telegram.ext import CommandHandler, Dispatcher
 
-from .utils import log
+from app.commands.add import add
+from app.commands.polo import polo
+from app.commands.reset import reset
+from app.commands.show import show
+from app.commands.start import start
+from app.utils.log import log
 
-try:
-  token = os.environ.get("TELEGRAM_BOT_TOKEN")
 
-  if token is None:
-    raise Exception("Missing bot token")
+def setup_bot(token: str):
+  try:
+    bot = Bot(token)
+    dispatcher = Dispatcher(bot, None, workers=0)
 
-  bot = Bot(token)
+    dispatcher.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(CommandHandler("help", start))
+    dispatcher.add_handler(CommandHandler("add", add))
+    dispatcher.add_handler(CommandHandler("show", show))
+    dispatcher.add_handler(CommandHandler("reset", reset))
+    dispatcher.add_handler(CommandHandler("marco", polo))
 
-  log.info("Starting bot... %s", "OK")
-except Exception as exc:
-  bot = None
+    log.info("Starting bot... %s", "OK")
 
-  log.exception("Starting bot... %s: %s", "ERR", exc)
+    return dispatcher
+  except Exception as exc:
+    log.exception("Starting bot... %s: %s", "ERR", exc)
+
+    return None
