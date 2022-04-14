@@ -9,6 +9,7 @@ flask-sqlalchemy = "*"
 gunicorn = "*"
 python-telegram-bot = "*"
 psycopg2 = "*"
+requests = "*"
 
 [dev-packages]
 pylint = "*"

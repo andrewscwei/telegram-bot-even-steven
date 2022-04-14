@@ -1,6 +1,7 @@
 import http
 import os
 
+import requests
 import telegram
 from flask import Flask, Response, request
 from flask_sqlalchemy import SQLAlchemy
@@ -20,6 +21,10 @@ def health_check() -> Response:
 @app.get("/version")
 def version() -> Response:
   return os.getenv("BUILD_NUMBER", "0"), http.HTTPStatus.OK
+
+@app.get("/reset")
+def reset() -> Response:
+  return requests.get(f"https://api.telegram.org/bot{token}/setWebhook\?url=https://telegram-bot-even-steven.herokuapp.com").content
 
 @app.post("/")
 def index() -> Response:
