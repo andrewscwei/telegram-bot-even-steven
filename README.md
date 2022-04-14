@@ -25,16 +25,10 @@ BOT_TOKEN="<token>"
 
 ### Development
 
-To run the bot locally with file watching and live reload:
+To run the bot locally in dev mode with file watching and live reload:
 
 ```sh
-# Install Python version specified in .python-version
-$ pyenv install -s
-
-# Install production and dev dependencies
-$ pipenv install -d
-
-# Run the app locally on 8080
+# Run the app locally on port 8080
 $ make dev
 ```
 
@@ -46,7 +40,7 @@ To run the bot locally in production mode:
 # Build the Docker image
 $ make build
 
-# Run the Docker image
+# Run the app locally on port 8080
 $ make run
 ```
 

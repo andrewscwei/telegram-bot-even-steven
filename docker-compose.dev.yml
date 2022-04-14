@@ -5,6 +5,7 @@ services:
     command: python main.py
     environment:
       BOT_TOKEN: $BOT_TOKEN
+      DATABASE_URL: db:5432
       FLASK_ENV: development
       PORT: 8080
     ports:
@@ -12,3 +13,17 @@ services:
     volumes:
       - ./main.py:/var/app/main.py
       - ./app:/var/app/app
+    links:
+      - db
+    depends_on:
+      - db
+  db:
+    image: postgres:14.2-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.db/data:/var/lib/postgresql/data

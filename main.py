@@ -3,10 +3,13 @@ import os
 
 import telegram
 from flask import Flask, Response, request
+from flask_sqlalchemy import SQLAlchemy
 
 from app.bot import setup_bot
 
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{os.environ.get('DATABASE_URL')}"
+db = SQLAlchemy(app)
 token = os.environ.get("BOT_TOKEN")
 dispatcher = setup_bot(token)
 

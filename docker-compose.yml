@@ -4,6 +4,21 @@ services:
     image: ${IMAGE_NAME}:${IMAGE_TAG:-latest}
     environment:
       BOT_TOKEN: $BOT_TOKEN
+      DATABASE_URL: db:5432
       PORT: 8080
     ports:
       - 8080:8080
+    links:
+      - db
+    depends_on:
+      - db
+  db:
+    image: postgres:14.2-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.db/data:/var/lib/postgresql/data

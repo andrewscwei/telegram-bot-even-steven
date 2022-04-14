@@ -1,5 +1,5 @@
 # Base target.
-FROM python:3.10.3-slim AS base
+FROM python:3.10.3-alpine AS base
 
 ARG BUILD_NUMBER
 
@@ -12,6 +12,8 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /var/app
 
+RUN apk update
+RUN apk add postgresql-dev gcc python3-dev musl-dev
 RUN pip install pipenv
 
 COPY Pipfile* ./

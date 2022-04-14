@@ -5,8 +5,10 @@ name = "pypi"
 
 [packages]
 flask = "*"
+flask-sqlalchemy = "*"
 gunicorn = "*"
 python-telegram-bot = "*"
+psycopg2 = "*"
 
 [dev-packages]
 pylint = "*"

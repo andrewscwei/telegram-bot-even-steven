@@ -71,6 +71,7 @@ secrets.json
 
 # Databases
 .mongodb
+.db
 *.sql
 *.sqlite
 dump.rdb
