@@ -8,7 +8,7 @@ on:
 env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   HEROKU_APP_NAME: telegram-bot-even-steven
-  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
 jobs:
   build:
     name: Build/Test

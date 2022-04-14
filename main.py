@@ -7,7 +7,7 @@ from flask import Flask, Response, request
 from app.bot import setup_bot
 
 app = Flask(__name__)
-token = os.environ.get("TELEGRAM_BOT_TOKEN")
+token = os.environ.get("BOT_TOKEN")
 dispatcher = setup_bot(token)
 
 @app.get("/health")

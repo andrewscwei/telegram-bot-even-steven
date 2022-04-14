@@ -20,7 +20,7 @@ Prepare `.env` file containing minimum environment variables for the bot:
 ```sh
 # .env
 
-TELEGRAM_BOT_TOKEN="<token>"
+BOT_TOKEN="<token>"
 ```
 
 ### Development
