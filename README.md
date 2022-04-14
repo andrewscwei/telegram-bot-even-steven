@@ -8,10 +8,13 @@ This is a webhook-based Telegram bot powered by [Flask](https://flask.palletspro
 
 ### Prerequisites
 
-This project assumes the following are already installed in your local machine:
+To begin development you just need to ensure that the following are installed in your local machine:
+- [Docker](https://www.docker.com/)
+- [`ngrok`](https://ngrok.com/download): Optional, but required in order to test the bot locally from Telegram
+
+To build the project directly, ensure the following are installed:
 - [`pyenv`](https://github.com/pyenv/pyenv): To easily switch between Python versions
 - [`pipenv`](https://pipenv.pypa.io/en/latest/): To manage `pip` dependencies and virtual environments
-- [`ngrok`](https://ngrok.com/download): Optional, but required in order to test the bot locally from Telegram
 
 ### Environment
 
@@ -21,6 +24,8 @@ Prepare `.env` file containing minimum environment variables for the bot:
 # .env
 
 BOT_TOKEN="<token>"
+REBASE_URL="<webhook_rebase_url>"
+DATABASE_URL="<postgres_url>"
 ```
 
 ### Development

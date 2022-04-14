@@ -35,12 +35,12 @@ clean:
 
 dev: tag = dev
 dev:
-	@docker build --target dev -t $(name):$(tag) .
+	@docker build --build-arg BUILD_NUMBER=$(build) --target dev -t $(name):$(tag) .
 	@IMAGE_NAME=$(name) IMAGE_TAG=$(tag) docker compose -f docker-compose.dev.yml up
 
 test: tag = test
 test:
-	@docker build --target test -t $(name):$(tag) .
+	@docker build --build-arg BUILD_NUMBER=$(build) --target test -t $(name):$(tag) .
 	@IMAGE_NAME=$(name) IMAGE_TAG=$(tag) docker compose run main pytest
 
 build:

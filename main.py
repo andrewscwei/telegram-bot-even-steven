@@ -9,22 +9,25 @@ from flask_sqlalchemy import SQLAlchemy
 from app.bot import setup_bot
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{os.environ.get('DATABASE_URL')}"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 db = SQLAlchemy(app)
 token = os.environ.get("BOT_TOKEN")
 dispatcher = setup_bot(token)
+rebase_url = os.environ.get("REBASE_URL")
 
 @app.get("/health")
 def health_check() -> Response:
-  return "OK", http.HTTPStatus.OK
-
-@app.get("/version")
-def version() -> Response:
-  return os.getenv("BUILD_NUMBER", "0"), http.HTTPStatus.OK
+  return {
+    "bot": "up" if dispatcher is not None else "down",
+    "build": os.environ.get("BUILD_NUMBER")
+  }, http.HTTPStatus.OK
 
 @app.get("/rebase")
 def reset() -> Response:
-  return requests.get(f"https://api.telegram.org/bot{token}/setWebhook\?url=https://telegram-bot-even-steven.herokuapp.com").content
+  if rebase_url is None:
+    return { "error": "No rebase URL provided" }, http.HTTPStatus.INTERNAL_SERVER_ERROR
+
+  return requests.get(f"https://api.telegram.org/bot{token}/setWebhook?url={rebase_url}").content
 
 @app.post("/")
 def index() -> Response:

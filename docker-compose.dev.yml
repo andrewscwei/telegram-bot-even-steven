@@ -5,6 +5,7 @@ services:
     command: python main.py
     environment:
       BOT_TOKEN: $BOT_TOKEN
+      REBASE_URL: $REBASE_URL
       DATABASE_URL: db:5432
       FLASK_ENV: development
       PORT: 8080
