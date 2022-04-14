@@ -22,7 +22,7 @@ def health_check() -> Response:
 def version() -> Response:
   return os.getenv("BUILD_NUMBER", "0"), http.HTTPStatus.OK
 
-@app.get("/reset")
+@app.get("/rebase")
 def reset() -> Response:
   return requests.get(f"https://api.telegram.org/bot{token}/setWebhook\?url=https://telegram-bot-even-steven.herokuapp.com").content
 
