@@ -16,13 +16,17 @@ RUN pip install pipenv
 
 COPY Pipfile* ./
 
-# Test target.
-FROM base AS test
+# Dev target.
+FROM base AS dev
 
 RUN pipenv install --system --deploy --dev
 
 COPY main.py ./main.py
 COPY app ./app
+
+# Test target.
+FROM dev AS test
+
 COPY tests ./tests
 
 # Release target.

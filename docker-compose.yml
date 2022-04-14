@@ -1,8 +1,7 @@
 version: "3.8"
 services:
   main:
-    image: ${IMAGE_NAME:-bot}:${IMAGE_TAG:-latest}
-    container_name: bot
+    image: ${IMAGE_NAME}:${IMAGE_TAG:-latest}
     environment:
       BOT_TOKEN: $BOT_TOKEN
       PORT: 8080

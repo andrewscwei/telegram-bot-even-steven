@@ -52,11 +52,9 @@ $ make run
 
 ### Unit Tests
 
-```sh
-# Running unit tests locally
-$ pipenv run pytest
+To run unit tests:
 
-# Running unit tests against Docker image
+```sh
 $ make test
 ```
 

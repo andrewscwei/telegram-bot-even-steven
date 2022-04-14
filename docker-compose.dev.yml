@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+  main:
+    image: ${IMAGE_NAME}:${IMAGE_TAG:-dev}
+    command: python main.py
+    environment:
+      BOT_TOKEN: $BOT_TOKEN
+      FLASK_ENV: development
+      PORT: 8080
+    ports:
+      - 8080:8080
+    volumes:
+      - ./main.py:/var/app/main.py
+      - ./app:/var/app/app
