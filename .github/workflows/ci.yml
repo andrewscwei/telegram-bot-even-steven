@@ -1,9 +1,8 @@
 name: CI
 on:
   push:
-    branches-ignore: ["**"]
-    # branches: ["**"]
-    # tags-ignore: ["v*"]
+    branches: ["**"]
+    tags-ignore: ["v*"]
 env:
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 jobs:
