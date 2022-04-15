@@ -5,7 +5,7 @@ services:
     environment:
       BOT_TOKEN: $BOT_TOKEN
       REBASE_URL: $REBASE_URL
-      DATABASE_URL: db:5432
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/core
       PORT: 8080
     ports:
       - 8080:8080

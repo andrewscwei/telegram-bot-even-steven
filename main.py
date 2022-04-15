@@ -4,30 +4,34 @@ import os
 import requests
 import telegram
 from flask import Flask, Response, request
-from flask_sqlalchemy import SQLAlchemy
 
 from app.bot import setup_bot
+from app.db import setup_db, test_db
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-db = SQLAlchemy(app)
-token = os.environ.get("BOT_TOKEN")
-dispatcher = setup_bot(token)
-rebase_url = os.environ.get("REBASE_URL")
+db = setup_db(app)
+dispatcher = setup_bot()
 
 @app.get("/health")
 def health_check() -> Response:
   return {
     "bot": "up" if dispatcher is not None else "down",
-    "build": os.environ.get("BUILD_NUMBER")
+    "build": os.environ.get("BUILD_NUMBER"),
+    "db": "up" if test_db(db) else "down",
   }, http.HTTPStatus.OK
+
+@app.get("/info")
+def info() -> Response:
+  return requests.get(f"https://api.telegram.org/bot{dispatcher.bot.token}/getMe").content
 
 @app.get("/rebase")
 def reset() -> Response:
+  rebase_url = os.environ.get("REBASE_URL")
+
   if rebase_url is None:
     return { "error": "No rebase URL provided" }, http.HTTPStatus.INTERNAL_SERVER_ERROR
 
-  return requests.get(f"https://api.telegram.org/bot{token}/setWebhook?url={rebase_url}").content
+  return requests.get(f"https://api.telegram.org/bot{dispatcher.bot.token}/setWebhook?url={rebase_url}").content
 
 @app.post("/")
 def index() -> Response:

@@ -20,7 +20,7 @@ if os.environ.get("FLASK_ENV") == "development":
 else:
   logging.basicConfig(
     level=logging.DEBUG,
-    format="%(asctime)s %(name)s: %(levelname)s %(message)s",
+    format=f"{COLOR_CYAN}%(name)s:{COLOR_RESET} {COLOR_GREEN}%(levelname)s{COLOR_RESET} %(message)s",
   )
 
 log = logging.getLogger("bot")
