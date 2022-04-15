@@ -1,9 +1,9 @@
 import os
 
 from flask import Flask
-from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
+from sqlalchemy_utils import create_database, database_exists
 
 from .utils.log import log
 
@@ -20,7 +20,12 @@ def setup_db(app: Flask) -> SQLAlchemy:
     app.config["SQLALCHEMY_DATABASE_URI"] = url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db = SQLAlchemy(app)
-    Migrate(app, db)
+
+    if not database_exists(url):
+      log.info("Verifying that database exists... %s: %s", "OK", "Database(s) missing, creating missing database(s)")
+      create_database(url)
+    else:
+      log.info("Verifying that database exists... %s: %s", "OK", "Database(s) are in place")
 
     log.info("Initializing database... %s: %s", "OK", db)
 

@@ -10,7 +10,7 @@ gunicorn = "*"
 python-telegram-bot = "*"
 psycopg2 = "*"
 requests = "*"
-flask-migrate = "*"
+sqlalchemy-utils = "*"
 
 [dev-packages]
 pylint = "*"
