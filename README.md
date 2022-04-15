@@ -24,8 +24,6 @@ Prepare `.env` file containing minimum environment variables for the bot:
 # .env
 
 BOT_TOKEN="<token>"
-REBASE_URL="<webhook_rebase_url>"
-DATABASE_URL="<postgres_url>"
 ```
 
 ### Development
