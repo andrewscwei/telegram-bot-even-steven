@@ -1,9 +1,9 @@
-from telegram import Update
+from telegram import ParseMode, Update
 from telegram.ext import CallbackContext
 
 from ..db import db
 from ..models import Expense
-from ..utils import log
+from ..utils import format_currency, log, parse_float
 
 
 def add(update: Update, context: CallbackContext):
@@ -11,10 +11,17 @@ def add(update: Update, context: CallbackContext):
   user = update.message.from_user.username
 
   try:
-    amount = float(context.args[0])
+    amount = parse_float(context.args[0])
   except Exception as exc:
     log.exception('Parsing amount... %s: %s', 'ERR', exc)
-    return update.message.reply_text('Oops! Looks like you didn\'t provide a valid amount, please try again (correct format: /add 99.99 <optional_label>).')
+
+    update.message.reply_text(
+      '💩 Looks like you didn\'t provide a valid amount (format: `/add 99.99 <optional_label>`)',
+      parse_mode=ParseMode.MARKDOWN,
+      quote=False,
+    )
+
+    return
 
   label = ' '.join(context.args[1:])
 
@@ -23,4 +30,13 @@ def add(update: Update, context: CallbackContext):
   db.session.add(expense)
   db.session.commit()
 
-  update.message.reply_text(f'Done! Added ${"{:.2f}".format(amount)} for @{user}')
+  reply = f'👌 Added {format_currency(amount)} for @{user}'
+
+  if label.strip():
+    reply += f': {label}'
+
+  update.message.reply_text(
+    reply,
+    parse_mode=ParseMode.MARKDOWN,
+    quote=False,
+  )

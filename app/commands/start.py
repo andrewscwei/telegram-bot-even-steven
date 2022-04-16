@@ -7,14 +7,14 @@ def start(update: Update, context: CallbackContext):
   text += '\n\n'
   text += 'You can control me by sending these commands:'
   text += '\n\n'
-  text += '/add - Adds an expense for a user, i.e. `/add 99.99 <optional_label>`'
+  text += '/add - Adds an expense for the current user, i.e. `/add 99.99 <optional_label>`'
   text += '\n'
-  text += '/show - Shows the current balance for all users with tracked expenses'
+  text += '/show - Shows all tracked expenses'
   text += '\n'
-  text += '/reset - Resets all tracked expenses'
+  text += '/clear - Clears all tracked expenses'
   text += '\n'
   text += '/marco - 🧐'
   text += '\n'
-  text += '/help - Shows available commands'
+  text += '/help - Displays available commands'
 
-  update.message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
+  update.message.reply_text(text, parse_mode=ParseMode.MARKDOWN, quote=False)

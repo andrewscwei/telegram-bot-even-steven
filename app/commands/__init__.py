@@ -1,5 +1,5 @@
 from .add import add
+from .clear import clear
 from .polo import polo
-from .reset import reset
 from .show import show
 from .start import start
