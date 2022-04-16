@@ -7,7 +7,7 @@ def start(update: Update, context: CallbackContext):
   text += '\n\n'
   text += 'You can control me by sending these commands:'
   text += '\n\n'
-  text += '/add - Adds an expense for a user, i.e. `/add @user 99.99 <name_of_expense>`'
+  text += '/add - Adds an expense for a user, i.e. `/add 99.99 <optional_label>`'
   text += '\n'
   text += '/show - Shows the current balance for all users with tracked expenses'
   text += '\n'
