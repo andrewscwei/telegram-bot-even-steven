@@ -19,4 +19,8 @@ def start(update: Update, context: CallbackContext):
   text += '\n'
   text += '/help - Displays available commands'
 
-  update.message.reply_text(text, parse_mode=ParseMode.MARKDOWN, quote=False)
+  update.message.reply_text(
+    text,
+    parse_mode=ParseMode.MARKDOWN,
+    quote=False,
+  )

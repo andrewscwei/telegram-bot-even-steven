@@ -1,13 +1,14 @@
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext
 
+from ..db import db
 
-def balances(update: Update, context: CallbackContext):
-  chat_id = update.message.chat_id
-  reply = 'Sorry! I\'m still working on this feature'
+
+def error(update: Update, context: CallbackContext):
+  db.session.rollback()
 
   update.message.reply_text(
-    reply,
+    '💩 Something went wrong, please try again later',
     parse_mode=ParseMode.MARKDOWN,
     quote=False,
   )

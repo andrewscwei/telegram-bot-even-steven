@@ -3,7 +3,7 @@ from telegram.ext import CommandHandler, Dispatcher
 
 from config import BOT_TOKEN
 
-from .commands import add, balances, clear, polo, show, start
+from .commands import add, balances, clear, error, polo, show, start
 from .utils import log
 
 
@@ -21,6 +21,7 @@ def create_dispatcher():
     dispatcher.add_handler(CommandHandler('reset', clear))
     dispatcher.add_handler(CommandHandler('clear', clear))
     dispatcher.add_handler(CommandHandler('marco', polo))
+    dispatcher.add_error_handler(error)
 
     log.info('Initializing bot... %s', 'OK')
 
