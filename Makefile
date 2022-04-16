@@ -41,7 +41,7 @@ dev:
 test: tag = test
 test:
 	@docker build --build-arg BUILD_NUMBER=$(build) --target test -t $(name):$(tag) .
-	@IMAGE_NAME=$(name) IMAGE_TAG=$(tag) docker compose run main pytest
+	@IMAGE_NAME=$(name) IMAGE_TAG=$(tag) docker compose -f docker-compose.test.yml up --abort-on-container-exit --exit-code-from app
 
 build:
 	@docker build --build-arg BUILD_NUMBER=$(build) --target release -t $(name):$(tag) .

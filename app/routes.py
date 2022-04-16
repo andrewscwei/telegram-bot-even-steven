@@ -3,16 +3,25 @@ import http
 import requests
 import telegram
 from flask import Blueprint, Response, request
+from sqlalchemy_utils import create_database, database_exists
 
-from config import BUILD_NUMBER, REBASE_URL
+from config import BUILD_NUMBER, DATABASE_URL, REBASE_URL
 
 from .bot import dispatcher
-from .db import test_db
+from .db import db, test_db
+from .utils import log
 
 routes = Blueprint('routes', __name__, url_prefix='/')
 
 @routes.get('/health')
 def health_check() -> Response:
+  try:
+    if not database_exists(DATABASE_URL):
+      create_database(DATABASE_URL)
+    db.create_all()
+  except Exception as exc:
+    log.exception('Health checking database... %s: %s', 'ERR', exc)
+
   return {
     'bot': 'up' if dispatcher is not None else 'down',
     'build': BUILD_NUMBER,
