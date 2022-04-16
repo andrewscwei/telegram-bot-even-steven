@@ -11,6 +11,8 @@ def start(update: Update, context: CallbackContext):
   text += '\n'
   text += '/show - Shows all tracked expenses'
   text += '\n'
+  text += '/balances - Check current balances for all tracked users'
+  text += '\n'
   text += '/clear - Clears all tracked expenses'
   text += '\n'
   text += '/marco - 🧐'
