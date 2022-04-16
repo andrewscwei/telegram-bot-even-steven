@@ -23,6 +23,7 @@ FROM base AS dev
 
 RUN pipenv install --system --deploy --dev
 
+COPY config.py ./config.py
 COPY main.py ./main.py
 COPY app ./app
 
@@ -36,6 +37,7 @@ FROM base AS release
 
 RUN pipenv install --system --deploy
 
+COPY config.py ./config.py
 COPY main.py ./main.py
 COPY app ./app
 

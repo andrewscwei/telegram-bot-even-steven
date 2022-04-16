@@ -5,13 +5,14 @@ services:
     command: python main.py
     environment:
       BOT_TOKEN: $BOT_TOKEN
-      REBASE_URL: $REBASE_URL
       DATABASE_URL: postgresql://postgres:postgres@db:5432/core
       FLASK_ENV: development
       PORT: 8080
+      REBASE_URL: $REBASE_URL
     ports:
       - 8080:8080
     volumes:
+      - ./config.py:/var/app/config.py
       - ./main.py:/var/app/main.py
       - ./app:/var/app/app
     links:
