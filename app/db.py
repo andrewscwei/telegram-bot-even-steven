@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
 
@@ -12,6 +13,7 @@ def init_db(app: Flask):
   app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
   app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
   db.init_app(app)
+  Migrate(app, db)
 
   log.info('Initializing database... %s: %s', 'OK', db)
 

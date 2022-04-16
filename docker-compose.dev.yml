@@ -3,12 +3,12 @@ services:
   app:
     image: ${IMAGE_NAME}:${IMAGE_TAG:-dev}
     container_name: app
-    command: python main.py
+    command: flask run --port 8080 --host 0.0.0.0
     environment:
       BOT_TOKEN: $BOT_TOKEN
       DATABASE_URL: postgresql://postgres:postgres@db:5432/core
       FLASK_ENV: development
-      PORT: 8080
+      FLASK_APP: main
       REBASE_URL: $REBASE_URL
     ports:
       - 8080:8080

@@ -1,6 +1,6 @@
 import os
 
-from app import dispatcher
+from app.bot import dispatcher
 
 
 def test_bot_token():

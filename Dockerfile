@@ -16,7 +16,8 @@ RUN apk update
 RUN apk add postgresql-dev gcc python3-dev musl-dev
 RUN pip install pipenv
 
-COPY Pipfile* ./
+COPY Pipfile ./Pipfile
+COPY Pipfile.lock ./Pipfile.lock
 
 # Dev target.
 FROM base AS dev
