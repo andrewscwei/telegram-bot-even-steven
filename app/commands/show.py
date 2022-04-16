@@ -1,3 +1,4 @@
+from flask_sqlalchemy import BaseQuery
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext
 
@@ -13,17 +14,26 @@ def show(update: Update, context: CallbackContext):
     reply = 'Nothing to show 🙃'
   else:
     reply = 'Current expenses 👇'
-    reply += '\n'
-
-    for expense in expenses:
-      reply += '\n'
-      reply += f'@{expense.user} {format_currency(expense.amount)}'
-
-      if expense.label.strip():
-        reply += f': {expense.label}'
+    reply += '\n\n'
+    reply += format_expenses(expenses)
 
   update.message.reply_text(
     reply,
     parse_mode=ParseMode.MARKDOWN,
     quote=False,
   )
+
+def format_expenses(expenses: BaseQuery):
+  reply = ''
+
+  for expense in expenses:
+    reply += '\n'
+    reply += f'<`{expense.id}`>: @{expense.user} `{format_currency(expense.amount)}`'
+
+    if expense.label.strip():
+      reply += f': {expense.label}'
+
+  if reply.startswith('\n'):
+    reply = reply.removeprefix('\n')
+
+  return reply
