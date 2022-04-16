@@ -14,4 +14,7 @@ def start(update: Update, context: CallbackContext):
   text += '/reset - Resets all tracked expenses'
   text += '\n'
   text += '/marco - 🧐'
+  text += '\n'
+  text += '/help - Shows available commands'
+
   update.message.reply_text(text, parse_mode=ParseMode.MARKDOWN)

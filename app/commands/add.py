@@ -23,4 +23,4 @@ def add(update: Update, context: CallbackContext):
   db.session.add(expense)
   db.session.commit()
 
-  update.message.reply_text(f'Done! Added ${amount} for @{user}')
+  update.message.reply_text(f'Done! Added ${"{:.2f}".format(amount)} for @{user}')

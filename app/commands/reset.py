@@ -17,4 +17,3 @@ def reset(update: Update, context: CallbackContext):
     log.exception('Resetting expenses for chat ID %s... %s: %s', chat_id, 'ERR', exc)
     db.session.rollback()
     update.message.reply_text('Oops! There seems to be an error resetting all expenses, please try again later.')
-

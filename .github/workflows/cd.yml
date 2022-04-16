@@ -45,6 +45,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Deploy to Heroku
+        run: .github/workflows/deploy_to_heroku.sh
       - name: Create release
         uses: actions/create-release@v1
         env:
@@ -55,5 +57,3 @@ jobs:
           body_path: RELEASE.md
           draft: false
           prerelease: false
-      - name: Deploy to Heroku
-        run: .github/workflows/deploy_to_heroku.sh

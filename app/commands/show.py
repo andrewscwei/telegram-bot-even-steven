@@ -10,11 +10,12 @@ def show(update: Update, context: CallbackContext):
 
   try:
     expenses = Expense.query.filter_by(chat_id=chat_id)
-    reply = 'Here is the current standing of expenses:'
+    reply = 'Current balance:'
     reply += '\n\n'
 
     for expense in expenses:
-      reply += f'@{expense.user}: {expense.amount}\n'
+      amount = '{:.2f}'.format(expense.amount)
+      reply += f'@{expense.user} ${amount}\n'
 
     update.message.reply_text(reply)
 
