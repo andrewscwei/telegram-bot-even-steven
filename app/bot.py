@@ -4,8 +4,8 @@ from telegram.ext import (CallbackQueryHandler, CommandHandler, Dispatcher,
 
 from config import BOT_TOKEN
 
-from .commands import (add, balances, callback_query, error, help_command,
-                       polo, prompt_clear, remove, show, start, unknown,
+from .commands import (add, balances, callback_query, clear, error,
+                       help_command, polo, remove, show, start, unknown,
                        version)
 from .utils import log
 
@@ -21,7 +21,7 @@ def create_dispatcher():
     dispatcher.add_handler(CommandHandler(['s', 'show', 'l', 'ls', 'list', 'all', 'expense', 'expenses', 'entry', 'entries', 'record', 'records'], show))
     dispatcher.add_handler(CommandHandler(['r', 'rm', 'remove', 'd', 'del', 'delete', 'erase'], remove))
     dispatcher.add_handler(CommandHandler(['b', 'balance', 'balances'], balances))
-    dispatcher.add_handler(CommandHandler(['c', 'clr', 'clear', 'reset'], prompt_clear))
+    dispatcher.add_handler(CommandHandler(['c', 'clr', 'clear', 'reset'], clear))
     dispatcher.add_handler(CommandHandler(['v', 'ver', 'version'], version))
     dispatcher.add_handler(CommandHandler(['marco'], polo))
     dispatcher.add_handler(MessageHandler(Filters.command, unknown))

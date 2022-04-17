@@ -11,7 +11,7 @@ def error(update: Update, context: CallbackContext):
   exc = context.error
   reply = str(exc) if str(exc).strip() else '💩 Something went wrong, please try again later'
 
-  log.exception('Handling message "%s" for chat ID <%s>... ERR', text, chat_id)
+  log.exception('Handling message "%s" for chat ID <%s>... %s', text, chat_id, 'ERR')
 
   update.message.reply_markdown(
     reply,

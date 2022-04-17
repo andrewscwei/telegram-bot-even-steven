@@ -7,7 +7,7 @@ from ..models import Expense
 from .balances import format_balances
 
 
-def prompt_clear(update: Update, context: CallbackContext):
+def clear(update: Update, context: CallbackContext):
   keyboard = [
     [InlineKeyboardButton('Yes', callback_data='clear_yes')],
     [InlineKeyboardButton('Cancel', callback_data='clear_no')],
@@ -19,7 +19,7 @@ def prompt_clear(update: Update, context: CallbackContext):
     quote=False,
   )
 
-def clear(query: CallbackQuery, context: CallbackContext):
+def clear_query(query: CallbackQuery, context: CallbackContext):
   chat_id = query.message.chat.id
   expenses = Expense.query.filter_by(chat_id=chat_id)
 
