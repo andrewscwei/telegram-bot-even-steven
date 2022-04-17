@@ -30,13 +30,6 @@ jobs:
           target: test
       - name: Run tests
         run: make test name=image tag=test
-      - name: Build release target
-        uses: docker/build-push-action@v2
-        with:
-          cache-from: type=gha,scope=${{ github.workflow }}
-          cache-to: type=gha,scope=${{ github.workflow }},mode=max
-          context: .
-          push: false
   deploy:
     name: Deploy
     needs: [build]
