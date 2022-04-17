@@ -1,4 +1,4 @@
-from telegram import ParseMode, Update
+from telegram import Update
 from telegram.ext import CallbackContext
 
 from ..db import db
@@ -11,32 +11,42 @@ def balances(update: Update, context: CallbackContext):
   reply = ''
 
   expenses_by_user = db.session.query(Expense.user, db.func.sum(Expense.amount)).filter_by(chat_id=chat_id).group_by(Expense.user).all()
-  num_user = len(expenses_by_user)
+  balances_by_user = compute_balances(expenses_by_user)
 
-  if num_user < 1:
-    reply = 'No outstanding balances 😎'
+  if len(balances_by_user) < 1:
+    reply = 'No outstanding balances 🙃'
+  elif is_even_steven(balances_by_user):
+    reply = 'No one owes anyone anything, even-steven 😎'
   else:
     reply += 'Outstanding balances 👇'
     reply += '\n\n'
-    reply += format_balances(expenses_by_user)
+    reply += format_balances(balances_by_user)
 
-  update.message.reply_text(
+  update.message.reply_markdown(
     reply,
-    parse_mode=ParseMode.MARKDOWN,
     quote=False,
   )
 
-def format_balances(expenses_by_user) -> str:
-  total = sum(amount for user, amount in expenses_by_user)
-  total_per_user = total / len(expenses_by_user)
+def compute_balances(expenses_by_user: list[tuple[str, float]]) -> tuple[str, float]:
+  total_expenses = sum(amount for user, amount in expenses_by_user)
+  owing_per_user = total_expenses / len(expenses_by_user)
 
+  return list(map(lambda t: (t[0], t[1] - owing_per_user), expenses_by_user))
+
+def is_even_steven(balances_by_user: list[tuple[str, float]]) -> bool:
+  for (user, amount) in balances_by_user:
+    if amount != 0:
+      return False
+
+  return True
+
+def format_balances(balances_by_user: list[tuple[str, float]]) -> str:
   ret = ''
 
-  for (user, amount) in expenses_by_user:
+  for (user, amount) in balances_by_user:
     ret += '\n'
-    ret += f'@{user}: `{format_currency(amount - total_per_user)}`'
+    ret += f'@{user}: `{format_currency(amount)}`'
 
-  if ret.startswith('\n'):
-    ret = ret.removeprefix('\n')
+  ret = ret.lstrip('\n')
 
   return ret
