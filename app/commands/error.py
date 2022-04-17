@@ -1,7 +1,6 @@
 from telegram import Update
 from telegram.ext import CallbackContext
 
-from ..db import db
 from ..utils import log
 
 

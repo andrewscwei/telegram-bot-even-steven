@@ -29,12 +29,16 @@ def clear_query(query: CallbackQuery, context: CallbackContext):
       parse_mode=ParseMode.MARKDOWN,
     )
   else:
-    expenses_by_user = db.session.query(Expense.user, db.func.sum(Expense.amount)).filter_by(chat_id=chat_id).group_by(Expense.user).all()
-    balances_str = format_balances(expenses_by_user)
-    expenses.delete()
-    db.session.commit()
+    try:
+      expenses_by_user = db.session.query(Expense.user, db.func.sum(Expense.amount)).filter_by(chat_id=chat_id).group_by(Expense.user).all()
+      balances_str = format_balances(expenses_by_user)
+      expenses.delete()
+      db.session.commit()
+    except Exception as exc:
+      db.session.rollback()
+      raise exc
 
-    reply = '👌 All expenses are cleared, below are the final balances:'
+    reply = '👌 All expenses are cleared, below are the last known balances:'
     reply += '\n\n'
     reply += balances_str
 
