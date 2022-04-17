@@ -13,7 +13,8 @@ def show(update: Update, context: CallbackContext):
   if expenses.count() < 1:
     reply = 'Nothing to show 🙃'
   else:
-    reply = 'Current expenses 👇'
+    total = sum(expense.amount for expense in expenses)
+    reply = f'Total expenses: `{format_currency(total)}`, breakdown 👇'
     reply += '\n\n'
     reply += format_expenses(expenses)
 

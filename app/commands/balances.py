@@ -1,5 +1,3 @@
-from functools import reduce
-
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext
 
@@ -18,7 +16,7 @@ def balances(update: Update, context: CallbackContext):
   if num_user < 1:
     reply = 'Nothing to show 🙃'
   else:
-    reply += 'Current balances 👇'
+    reply += 'Outstanding balances 👇'
     reply += '\n\n'
     reply += format_balances(expenses_by_user)
 
@@ -29,14 +27,14 @@ def balances(update: Update, context: CallbackContext):
   )
 
 def format_balances(expenses_by_user) -> str:
-  total_expenses = sum(amount for user, amount in expenses_by_user)
-  total_per_user = total_expenses / len(expenses_by_user)
+  total = sum(amount for user, amount in expenses_by_user)
+  total_per_user = total / len(expenses_by_user)
 
   ret = ''
 
   for (user, amount) in expenses_by_user:
     ret += '\n'
-    ret += f'@{user}: {format_currency(amount - total_per_user)}'
+    ret += f'@{user}: `{format_currency(amount - total_per_user)}`'
 
   if ret.startswith('\n'):
     ret = ret.removeprefix('\n')
