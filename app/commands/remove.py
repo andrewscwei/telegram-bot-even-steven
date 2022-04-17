@@ -40,5 +40,5 @@ def remove(update: Update, context: CallbackContext):
   update.message.reply_text(
     reply,
     parse_mode=ParseMode.MARKDOWN,
-    quote=True,
+    quote=False,
   )
