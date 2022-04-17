@@ -11,6 +11,7 @@ COLOR_PURPLE = "$(COLOR_PREFIX)0;35m"
 COLOR_CYAN = "$(COLOR_PREFIX)0;36m"
 COLOR_LIGHT_GRAY = "$(COLOR_PREFIX)0;37m"
 
+version = $(shell git rev-parse --abbrev-ref HEAD)
 build = $(shell git rev-parse --short HEAD)
 name = $(shell basename ${PWD})
 tag = latest
@@ -35,16 +36,16 @@ clean:
 
 dev: tag = dev
 dev:
-	@docker build --build-arg BUILD_NUMBER=$(build) --target dev -t $(name):$(tag) .
+	@docker build --build-arg VERSION=$(version) --build-arg BUILD_NUMBER=$(build) --target dev -t $(name):$(tag) .
 	@IMAGE_NAME=$(name) IMAGE_TAG=$(tag) docker compose -f docker-compose.dev.yml up
 
 test: tag = test
 test:
-	@docker build --build-arg BUILD_NUMBER=$(build) --target test -t $(name):$(tag) .
+	@docker build --build-arg VERSION=$(version) --build-arg BUILD_NUMBER=$(build) --target test -t $(name):$(tag) .
 	@IMAGE_NAME=$(name) IMAGE_TAG=$(tag) docker compose -f docker-compose.test.yml up --abort-on-container-exit --exit-code-from app
 
 build:
-	@docker build --build-arg BUILD_NUMBER=$(build) --target release -t $(name):$(tag) .
+	@docker build --build-arg VERSION=$(version) --build-arg BUILD_NUMBER=$(build) --target release -t $(name):$(tag) .
 
 run:
 	@IMAGE_NAME=$(name) IMAGE_TAG=$(tag) docker compose up
