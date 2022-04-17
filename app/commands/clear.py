@@ -3,6 +3,7 @@ from telegram.ext import CallbackContext
 
 from ..db import db
 from ..models import Expense
+from .balances import balances
 
 
 def clear(update: Update, context: CallbackContext):
@@ -16,6 +17,7 @@ def clear(update: Update, context: CallbackContext):
       quote=False,
     )
   else:
+    balances(update, context)
     expenses.delete()
     db.session.commit()
 

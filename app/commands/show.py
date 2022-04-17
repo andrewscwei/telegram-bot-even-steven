@@ -24,16 +24,16 @@ def show(update: Update, context: CallbackContext):
   )
 
 def format_expenses(expenses: BaseQuery):
-  reply = ''
+  ret = ''
 
   for expense in expenses:
-    reply += '\n'
-    reply += f'<`{expense.id}`> @{expense.user} `{format_currency(expense.amount)}`'
+    ret += '\n'
+    ret += f'<`{expense.id}`> @{expense.user} `{format_currency(expense.amount)}`'
 
     if expense.label.strip():
-      reply += f': {expense.label}'
+      ret += f': {expense.label}'
 
-  if reply.startswith('\n'):
-    reply = reply.removeprefix('\n')
+  if ret.startswith('\n'):
+    ret = ret.removeprefix('\n')
 
-  return reply
+  return ret
