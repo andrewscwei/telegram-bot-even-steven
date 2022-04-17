@@ -28,7 +28,7 @@ def format_expenses(expenses: BaseQuery):
 
   for expense in expenses:
     reply += '\n'
-    reply += f'<`{expense.id}`>: @{expense.user} `{format_currency(expense.amount)}`'
+    reply += f'<`{expense.id}`> @{expense.user} `{format_currency(expense.amount)}`'
 
     if expense.label.strip():
       reply += f': {expense.label}'

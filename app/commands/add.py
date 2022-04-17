@@ -28,7 +28,7 @@ def add(update: Update, context: CallbackContext):
   db.session.add(expense)
   db.session.commit()
 
-  reply = f'👌 Added {format_currency(amount)} for @{user}'
+  reply = f'👌 Added `{format_currency(amount)}` for @{user}'
 
   if label.strip():
     reply += f': {label}'
