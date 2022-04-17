@@ -15,7 +15,7 @@ def format_help_command() -> str:
   ret += '\n'
   ret += '/remove - Removes an expense by its ID (example: `/remove <id>`)'
   ret += '\n'
-  ret += '/show - Shows all tracked expenses'
+  ret += '/list - Lists all tracked expenses'
   ret += '\n'
   ret += '/balances - Checks current balances for all tracked users'
   ret += '\n'

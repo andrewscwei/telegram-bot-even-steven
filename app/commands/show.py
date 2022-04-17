@@ -14,7 +14,7 @@ def show(update: Update, context: CallbackContext):
     reply = 'Nothing to show 🙃'
   else:
     total = sum(expense.amount for expense in expenses)
-    reply = f'Total expenses: `{format_currency(total)}`, breakdown 👇'
+    reply = f'Total expenses at `{format_currency(total)}`, breakdown 👇'
     reply += '\n\n'
     reply += format_expenses(expenses)
 
@@ -24,7 +24,7 @@ def show(update: Update, context: CallbackContext):
     quote=False,
   )
 
-def format_expenses(expenses: BaseQuery):
+def format_expenses(expenses: BaseQuery) -> str:
   ret = ''
 
   for expense in expenses:

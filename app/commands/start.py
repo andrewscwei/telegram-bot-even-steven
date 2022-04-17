@@ -1,4 +1,4 @@
-from telegram import ParseMode, Update
+from telegram import Update
 from telegram.ext import CallbackContext
 
 from .help_command import format_help_command
@@ -9,8 +9,7 @@ def start(update: Update, context: CallbackContext):
   reply += '\n\n'
   reply += format_help_command()
 
-  update.message.reply_text(
+  update.message.reply_markdown(
     reply,
-    parse_mode=ParseMode.MARKDOWN,
     quote=False,
   )
