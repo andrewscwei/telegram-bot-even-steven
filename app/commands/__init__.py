@@ -9,3 +9,4 @@ from .remove import remove
 from .show import show
 from .start import start
 from .unknown import unknown
+from .version import version

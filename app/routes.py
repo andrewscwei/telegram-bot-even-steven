@@ -5,7 +5,7 @@ import telegram
 from flask import Blueprint, Response, request
 from sqlalchemy_utils import create_database, database_exists
 
-from config import BUILD_NUMBER, DATABASE_URL, REBASE_URL
+from config import BUILD_NUMBER, DATABASE_URL, REBASE_URL, VERSION
 
 from .bot import dispatcher
 from .db import db, test_db
@@ -24,13 +24,9 @@ def health_check() -> Response:
 
   return {
     'bot': 'up' if dispatcher is not None else 'down',
-    'build': BUILD_NUMBER,
+    'version': f'{VERSION}-{BUILD_NUMBER}',
     'db': 'up' if test_db() else 'down',
   }, http.HTTPStatus.OK
-
-@routes.get('/info')
-def info() -> Response:
-  return requests.get(f'https://api.telegram.org/bot{dispatcher.bot.token}/getMe').content
 
 @routes.get('/rebase')
 def reset() -> Response:

@@ -14,13 +14,13 @@ def prompt_clear(update: Update, context: CallbackContext):
   ]
 
   update.message.reply_text(
-    '⛔️ Are you sure you want to clear all expenses?',
+    '✋ Are you sure you want to clear all expenses?',
     reply_markup=InlineKeyboardMarkup(keyboard),
     quote=False,
   )
 
 def clear(query: CallbackQuery, context: CallbackContext):
-  chat_id = query.message.chat
+  chat_id = query.message.chat.id
   expenses = Expense.query.filter_by(chat_id=chat_id)
 
   if expenses.count() < 1:

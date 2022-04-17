@@ -14,7 +14,7 @@ def balances(update: Update, context: CallbackContext):
   num_user = len(expenses_by_user)
 
   if num_user < 1:
-    reply = 'Nothing to show 🙃'
+    reply = 'No outstanding balances 😎'
   else:
     reply += 'Outstanding balances 👇'
     reply += '\n\n'
