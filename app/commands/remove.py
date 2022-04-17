@@ -15,7 +15,7 @@ def remove(update: Update, context: CallbackContext):
     log.exception('Parsing ID... %s: %s', 'ERR', exc)
 
     return update.message.reply_text(
-      '💩 Looks like you didn\'t provide a valid expense ID (format: `/remove <expense_id>`)',
+      '💩 Looks like you didn\'t provide a valid expense ID (example: `/remove <expense_id>`)',
       parse_mode=ParseMode.MARKDOWN,
       quote=False,
     )

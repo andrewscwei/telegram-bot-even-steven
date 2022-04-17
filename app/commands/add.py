@@ -16,7 +16,7 @@ def add(update: Update, context: CallbackContext):
     log.exception('Parsing amount... %s: %s', 'ERR', exc)
 
     return update.message.reply_text(
-      '💩 Looks like you didn\'t provide a valid amount (format: `/add 99.99 <optional_label>`)',
+      '💩 Looks like you didn\'t provide a valid amount (example: `/add 99.99 <optional_label>`)',
       parse_mode=ParseMode.MARKDOWN,
       quote=False,
     )

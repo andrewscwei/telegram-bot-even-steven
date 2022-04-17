@@ -4,8 +4,8 @@ from telegram.ext import CallbackContext
 from .help_command import format_help_command
 
 
-def start(update: Update, context: CallbackContext):
-  reply = 'Hi y\'all 🤘 my name is Even Steven. I\'m here to help split expenses _evenly_ for everyone!'
+def unknown(update: Update, context: CallbackContext):
+  reply = '🤔 I don\'t recognize that command'
   reply += '\n\n'
   reply += format_help_command()
 
