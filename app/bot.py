@@ -1,6 +1,6 @@
 from telegram import Bot
 from telegram.ext import (CallbackQueryHandler, CommandHandler, Dispatcher,
-                          RegexHandler)
+                          Filters, MessageHandler)
 
 from config import BOT_TOKEN
 
@@ -22,7 +22,7 @@ def create_dispatcher():
     dispatcher.add_handler(CommandHandler(['b', 'balance', 'balances'], balances))
     dispatcher.add_handler(CommandHandler(['c', 'clr', 'clear', 'reset'], prompt_clear))
     dispatcher.add_handler(CommandHandler(['marco'], polo))
-    dispatcher.add_handler(RegexHandler(r'/.*', unknown))
+    dispatcher.add_handler(MessageHandler(Filters.command, unknown))
     dispatcher.add_handler(CallbackQueryHandler(callback_query))
     dispatcher.add_error_handler(error)
 
