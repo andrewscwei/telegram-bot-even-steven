@@ -4,6 +4,7 @@ from telegram.ext import CallbackContext
 
 from ..db import db
 from ..models import Expense
+from ..utils import parse_user_alias
 from .balances import format_balances
 
 
@@ -22,6 +23,7 @@ def clear(update: Update, context: CallbackContext):
 def clear_query(query: CallbackQuery, context: CallbackContext):
   chat_id = query.message.chat.id
   expenses = Expense.query.filter_by(chat_id=chat_id)
+  user_alias = parse_user_alias(query.message.from_user)
 
   if expenses.count() < 1:
     query.edit_message_text(
@@ -30,7 +32,10 @@ def clear_query(query: CallbackQuery, context: CallbackContext):
     )
   else:
     try:
-      expenses_by_user = db.session.query(Expense.user, db.func.sum(Expense.amount)).filter_by(chat_id=chat_id).group_by(Expense.user).all()
+      expenses_by_user = db.session.query(Expense.user_id, db.func.sum(Expense.amount)) \
+        .filter_by(chat_id=chat_id) \
+        .group_by(Expense.user_id) \
+        .all()
       balances_str = format_balances(expenses_by_user)
       expenses.delete()
       db.session.commit()
@@ -38,7 +43,7 @@ def clear_query(query: CallbackQuery, context: CallbackContext):
       db.session.rollback()
       raise exc
 
-    reply = '👌 All expenses are cleared, below are the last known balances:'
+    reply = f'👌 All expenses are cleared by {user_alias}, here\'re the final balances:'
     reply += '\n\n'
     reply += balances_str
 

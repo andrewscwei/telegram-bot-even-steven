@@ -9,7 +9,7 @@ def parse_int(value) -> int:
   ret = int(value)
   return ret
 
-def parse_user(user: User) -> str:
+def parse_user_alias(user: User) -> str:
   username = user.username
   first_name = user.first_name
   return f'@{username}' if username.strip() else first_name

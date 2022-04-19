@@ -29,7 +29,7 @@ def format_expenses(expenses: BaseQuery) -> str:
 
   for expense in expenses:
     ret += '\n'
-    ret += f'{{`{expense.id}`}} @{expense.user} `{format_currency(expense.amount)}`'
+    ret += f'{{`{expense.id}`}} {expense.user_alias} `{format_currency(expense.amount)}`'
 
     if expense.label.strip():
       ret += f': {expense.label}'
