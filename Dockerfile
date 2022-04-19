@@ -38,5 +38,6 @@ RUN pipenv install --system --deploy
 COPY config.py ./config.py
 COPY main.py ./main.py
 COPY app ./app
+COPY migrations ./migrations
 
-CMD gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 8 --timeout 0 main:app
+CMD flask db migrate; flask db upgrade; gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 8 --timeout 0 main:app
