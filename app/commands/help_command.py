@@ -13,7 +13,7 @@ def format_help_command() -> str:
   ret += '\n\n'
   ret += '/add - Adds an expense for the current user (example: `/add 99.99 <optional_label>`)'
   ret += '\n'
-  ret += '/remove - Removes an expense by its ID (example: `/remove <id>`)'
+  ret += '/remove - Removes an expense by its ID (example: `/remove <expense_id>`)'
   ret += '\n'
   ret += '/list - Lists all tracked expenses'
   ret += '\n'

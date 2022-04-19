@@ -11,16 +11,18 @@ def remove(update: Update, context: CallbackContext):
   user_id = update.message.from_user.id
 
   try:
-    expense_id = parse_int(context.args[0])
+    idx = parse_int(context.args[0])
   except Exception as exc:
     raise Exception('💩 Looks like you didn\'t provide a valid expense ID (example: `/remove <expense_id>`)') from exc
 
-  expense = Expense.query.filter_by(id=expense_id, chat_id=chat_id).first()
+  expenses = Expense.query.filter_by(chat_id=chat_id)
+  num_expenses = expenses.count()
+  expense = expenses[idx - 1] if num_expenses >= idx else None
 
   if expense is None:
     return update.message.reply_markdown(
-      f'✋ No expense found with ID {expense_id}',
-      quote=True,
+      f'✋ No expense found with ID {idx}',
+      quote=False,
     )
 
   reply = ''

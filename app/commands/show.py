@@ -27,9 +27,9 @@ def show(update: Update, context: CallbackContext):
 def format_expenses(expenses: BaseQuery) -> str:
   ret = ''
 
-  for expense in expenses:
+  for idx, expense in enumerate(expenses):
     ret += '\n'
-    ret += f'{{`{expense.id}`}} {expense.user_alias} `{format_currency(expense.amount)}`'
+    ret += f'`{idx + 1}`: {expense.user_alias} `{format_currency(expense.amount)}`'
 
     if expense.label.strip():
       ret += f': {expense.label}'
