@@ -3,23 +3,14 @@ from telegram.ext import CallbackContext
 
 from ..db import db
 from ..models import Expense
-from ..utils import format_currency, log
+from ..utils import format_currency
 
 
 def balances(update: Update, context: CallbackContext):
   chat_id = update.message.chat_id
   reply = ''
 
-  expenses_by_user = db.session.query(
-    Expense.user_id,
-    db.func.max(Expense.user_alias),
-    db.func.sum(Expense.amount),
-  ) \
-    .filter_by(chat_id=chat_id) \
-    .group_by(Expense.user_id) \
-    .all()
-
-  balances_by_user = compute_balances(expenses_by_user)
+  balances_by_user = compute_balances(chat_id)
 
   if len(balances_by_user) < 1:
     reply = 'No outstanding balances 🙃'
@@ -35,7 +26,20 @@ def balances(update: Update, context: CallbackContext):
     quote=False,
   )
 
-def compute_balances(expenses_by_user: list[tuple[str, str, float]]) -> tuple[str, str, float]:
+def compute_expenses(chat_id: str) -> tuple[str, str, float]:
+  expenses_by_user = db.session.query(
+    Expense.user_id,
+    db.func.max(Expense.user_alias),
+    db.func.sum(Expense.amount),
+  ) \
+    .filter_by(chat_id=chat_id) \
+    .group_by(Expense.user_id) \
+    .all()
+
+  return expenses_by_user
+
+def compute_balances(chat_id: str) -> tuple[str, str, float]:
+  expenses_by_user = compute_expenses(chat_id)
   total_expenses = sum(amount for user_id, user_alias, amount in expenses_by_user)
   owing_per_user = total_expenses / len(expenses_by_user)
 

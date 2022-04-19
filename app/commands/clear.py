@@ -5,7 +5,7 @@ from telegram.ext import CallbackContext
 from ..db import db
 from ..models import Expense
 from ..utils import parse_user_alias
-from .balances import format_balances
+from .balances import compute_balances, format_balances, is_even_steven
 
 
 def clear(update: Update, context: CallbackContext):
@@ -32,24 +32,20 @@ def clear_query_yes(query: CallbackQuery, context: CallbackContext):
     )
   else:
     try:
-      expenses_by_user = db.session.query(
-        Expense.user_id,
-        db.func.max(Expense.user_alias),
-        db.func.sum(Expense.amount),
-      ) \
-        .filter_by(chat_id=chat_id) \
-        .group_by(Expense.user_id) \
-        .all()
-      balances_str = format_balances(expenses_by_user)
+      balances_by_user = compute_balances(chat_id)
       expenses.delete()
       db.session.commit()
     except Exception as exc:
       db.session.rollback()
       raise exc
 
-    reply = f'👌 All expenses are cleared by {user_alias}, here\'re the final balances:'
+    reply = f'👌 All expenses are cleared by {user_alias}, here\'re the last outstanding balances 👇'
     reply += '\n\n'
-    reply += balances_str
+
+    if is_even_steven(balances_by_user):
+      reply += 'No one owes anyone anything, even-steven 😎'
+    else:
+      reply += format_balances(balances_by_user)
 
     query.edit_message_text(
       reply,
@@ -58,4 +54,4 @@ def clear_query_yes(query: CallbackQuery, context: CallbackContext):
 
 def clear_query_no(query: CallbackQuery, context: CallbackContext):
   user_alias = parse_user_alias(query.from_user)
-  query.edit_message_text(text=f'👌 {user_alias} cancelled clear command')
+  query.edit_message_text(text=f'👌 Clear command cancelled by {user_alias}')
