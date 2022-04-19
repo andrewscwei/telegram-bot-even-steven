@@ -32,7 +32,11 @@ def clear_query_yes(query: CallbackQuery, context: CallbackContext):
     )
   else:
     try:
-      expenses_by_user = db.session.query(Expense.user_id, db.func.sum(Expense.amount)) \
+      expenses_by_user = db.session.query(
+        Expense.user_id,
+        db.func.max(Expense.user_alias),
+        db.func.sum(Expense.amount),
+      ) \
         .filter_by(chat_id=chat_id) \
         .group_by(Expense.user_id) \
         .all()

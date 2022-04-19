@@ -19,7 +19,6 @@ def balances(update: Update, context: CallbackContext):
     .group_by(Expense.user_id) \
     .all()
 
-  log.info("FOO: %s", expenses_by_user)
   balances_by_user = compute_balances(expenses_by_user)
 
   if len(balances_by_user) < 1:
