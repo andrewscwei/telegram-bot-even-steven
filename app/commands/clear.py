@@ -20,10 +20,10 @@ def clear(update: Update, context: CallbackContext):
     quote=False,
   )
 
-def clear_query(query: CallbackQuery, context: CallbackContext):
+def clear_query_yes(query: CallbackQuery, context: CallbackContext):
   chat_id = query.message.chat.id
   expenses = Expense.query.filter_by(chat_id=chat_id)
-  user_alias = parse_user_alias(query.message.from_user)
+  user_alias = parse_user_alias(query.from_user)
 
   if expenses.count() < 1:
     query.edit_message_text(
@@ -51,3 +51,7 @@ def clear_query(query: CallbackQuery, context: CallbackContext):
       reply,
       parse_mode=ParseMode.MARKDOWN,
     )
+
+def clear_query_no(query: CallbackQuery, context: CallbackContext):
+  user_alias = parse_user_alias(query.from_user)
+  query.edit_message_text(text=f'👌 {user_alias} cancelled clear command')
