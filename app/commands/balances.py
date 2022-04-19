@@ -40,8 +40,13 @@ def compute_expenses(chat_id: str) -> tuple[str, str, float]:
 
 def compute_balances(chat_id: str) -> tuple[str, str, float]:
   expenses_by_user = compute_expenses(chat_id)
+  num_users = len(expenses_by_user)
+
+  if num_users <= 0:
+    return []
+
   total_expenses = sum(amount for user_id, user_alias, amount in expenses_by_user)
-  owing_per_user = total_expenses / len(expenses_by_user)
+  owing_per_user = total_expenses / num_users
 
   return list(map(lambda t: (t[0], t[1], t[2] - owing_per_user), expenses_by_user))
 
