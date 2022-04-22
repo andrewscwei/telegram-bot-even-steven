@@ -33,3 +33,14 @@ jobs:
           cache-to: type=gha,scope=${{ github.workflow }},mode=max
           context: .
           push: false
+  notify:
+    name: Notify
+    needs: [build]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: andrewscwei/telegram-action@v1.0.0
+        with:
+          success: ${{ needs.build.result == 'success' }}
+          bot-token: ${{ secrets.TELEGRAM_DEVOPS_BOT_TOKEN }}
+          chat-id: ${{ secrets.TELEGRAM_DEVOPS_CHAT_ID }}
