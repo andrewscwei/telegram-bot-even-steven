@@ -16,6 +16,16 @@ To build the project directly, ensure the following are installed:
 - [`pyenv`](https://github.com/pyenv/pyenv): To easily switch between Python versions
 - [`pipenv`](https://pipenv.pypa.io/en/latest/): To manage `pip` dependencies and virtual environments
 
+### Setup
+
+```sh
+# Install Python version specified in .python-version
+$ pyenv install -s
+
+# Install production and dev dependencies
+$ pipenv install -d
+```
+
 ### Environment
 
 Prepare `.env` file containing minimum environment variables for the bot:
